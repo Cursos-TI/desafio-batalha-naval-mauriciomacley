@@ -1,77 +1,78 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-#define TAM 10
-#define NAVIO 3
-#define TAM_NAVIO 3
+#define TAM 5  // Tamanho das matrizes de habilidade (5x5)
 
 int main() {
-    int tabuleiro[TAM][TAM];
+    int cone[TAM][TAM] = {0};      // Matriz para padrão CONE
+    int cruz[TAM][TAM] = {0};      // Matriz para padrão CRUZ
+    int octaedro[TAM][TAM] = {0};  // Matriz para padrão OCTAEDRO
 
-    // Inicializa todas as posições com 0 (água)
+    // -----------------------------
+    // Preencher padrão CONE
+    // -----------------------------
+    // Forma de triângulo com vértice para cima
     for (int i = 0; i < TAM; i++) {
         for (int j = 0; j < TAM; j++) {
-            tabuleiro[i][j] = 0;
+            if (j >= TAM / 2 - i && j <= TAM / 2 + i) {
+                cone[i][j] = 1;
+            }
         }
     }
 
-    // Coordenadas iniciais (definidas no código)
-    int lh = 1, ch = 2; // horizontal
-    int lv = 4, cv = 5; // vertical
-    int ld1 = 0, cd1 = 0; // diagonal ↘
-    int ld2 = 7, cd2 = 2; // diagonal ↙
-
-    // Posiciona navio horizontal
-    for (int i = 0; i < TAM_NAVIO; i++) {
-        tabuleiro[lh][ch + i] = NAVIO;
-    }
-
-    // Posiciona navio vertical
-    for (int i = 0; i < TAM_NAVIO; i++) {
-        tabuleiro[lv + i][cv] = NAVIO;
-    }
-
-    // Posiciona navio diagonal ↘
-    for (int i = 0; i < TAM_NAVIO; i++) {
-        tabuleiro[ld1 + i][cd1 + i] = NAVIO;
-    }
-
-    // Posiciona navio diagonal ↙
-    for (int i = 0; i < TAM_NAVIO; i++) {
-        tabuleiro[ld2 - i][cd2 + i] = NAVIO;
-    }
-
-    // Exibe coordenadas dos navios
-    printf("Coordenadas do navio horizontal:\n");
-    for (int i = 0; i < TAM_NAVIO; i++) {
-        printf("(%d, %d)\n", lh, ch + i);
-    }
-
-    printf("\nCoordenadas do navio vertical:\n");
-    for (int i = 0; i < TAM_NAVIO; i++) {
-        printf("(%d, %d)\n", lv + i, cv);
-    }
-
-    printf("\nCoordenadas do navio diagonal ↘:\n");
-    for (int i = 0; i < TAM_NAVIO; i++) {
-        printf("(%d, %d)\n", ld1 + i, cd1 + i);
-    }
-
-    printf("\nCoordenadas do navio diagonal ↙:\n");
-    for (int i = 0; i < TAM_NAVIO; i++) {
-        printf("(%d, %d)\n", ld2 - i, cd2 + i);
-    }
-
-    // Exibe o tabuleiro
-    printf("\nTabuleiro:\n\n   ");
-    for (int j = 0; j < TAM; j++) {
-        printf("%2d ", j);
-    }
-    printf("\n");
-
+    // -----------------------------
+    // Preencher padrão CRUZ
+    // -----------------------------
     for (int i = 0; i < TAM; i++) {
-        printf("%2d ", i);
         for (int j = 0; j < TAM; j++) {
-            printf(" %d ", tabuleiro[i][j]);
+            if (i == TAM / 2 || j == TAM / 2) {
+                cruz[i][j] = 1;
+            }
+        }
+    }
+
+    // -----------------------------
+    // Preencher padrão OCTAEDRO
+    // -----------------------------
+    // Forma de losango (ou diamante)
+    for (int i = 0; i < TAM; i++) {
+        for (int j = 0; j < TAM; j++) {
+            int dist = abs(i - TAM / 2) + abs(j - TAM / 2);
+            if (dist <= TAM / 2) {
+                octaedro[i][j] = 1;
+            }
+        }
+    }
+
+    // -----------------------------
+    // Exibir padrão CONE
+    // -----------------------------
+    printf("Habilidade: CONE\n");
+    for (int i = 0; i < TAM; i++) {
+        for (int j = 0; j < TAM; j++) {
+            printf("%d ", cone[i][j]);
+        }
+        printf("\n");
+    }
+
+    // -----------------------------
+    // Exibir padrão CRUZ
+    // -----------------------------
+    printf("\nHabilidade: CRUZ\n");
+    for (int i = 0; i < TAM; i++) {
+        for (int j = 0; j < TAM; j++) {
+            printf("%d ", cruz[i][j]);
+        }
+        printf("\n");
+    }
+
+    // -----------------------------
+    // Exibir padrão OCTAEDRO
+    // -----------------------------
+    printf("\nHabilidade: OCTAEDRO\n");
+    for (int i = 0; i < TAM; i++) {
+        for (int j = 0; j < TAM; j++) {
+            printf("%d ", octaedro[i][j]);
         }
         printf("\n");
     }
